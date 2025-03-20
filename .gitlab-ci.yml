@@ -1,0 +1,38 @@
+image: node:18-alpine
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  environment:
+    name: prod
+  tags:
+    - gitlab-org-docker
+  before_script:
+    - cp $BUILD_ENV .env
+    - npm install
+  script:
+    - CI=false npm run build
+  artifacts:
+    paths:
+      - build/
+  only:
+    refs:
+      - main
+
+deploy:
+  stage: deploy
+  needs:
+    - build
+  environment:
+    name: prod
+  variables:
+    CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
+  script:
+    - npm install -g wrangler
+    - wrangler pages deploy build/ --project-name=todays-event --branch=main
+  only:
+    refs:
+      - main

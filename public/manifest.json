@@ -1,0 +1,15 @@
+{
+  "short_name": "Today's-Event-React",
+  "name": "Today's Event React App",
+  "icons": [
+    {
+      "src": "./assets/brand/logo-app.png",
+      "sizes": "100x100",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
